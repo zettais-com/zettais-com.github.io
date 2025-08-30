@@ -1,10 +1,10 @@
 <!-- Zetta Logo SVG -->
-<svg width="48" height="32" viewBox="0 0 48 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<svg width="48" height="32" viewBox="0 0 48 32" fill="white" xmlns="http://www.w3.org/2000/svg">
     <!-- Z shape -->
-    <path d="M4 4H44L4 28H44" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4 4H44L4 28H44" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
     <!-- Circles on vertices -->
-    <circle cx="4" cy="4" r="3" fill="currentColor"/>
-    <circle cx="44" cy="4" r="3" fill="currentColor"/>
-    <circle cx="4" cy="28" r="3" fill="currentColor"/>
-    <circle cx="44" cy="28" r="3" fill="currentColor"/>
+    <circle cx="4" cy="4" r="3" fill="white"/>
+    <circle cx="44" cy="4" r="3" fill="white"/>
+    <circle cx="4" cy="28" r="3" fill="white"/>
+    <circle cx="44" cy="28" r="3" fill="white"/>
 </svg>
