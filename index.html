@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zetta - Desenvolvimento de Software</title>
+    <!-- Web Open Graph Metadata -->
+    <meta property="og:title" content="Zetta - Desenvolvimento de Software">
+    <meta property="og:description" content="Transforming ideas into powerful, customized software solutions. We provide expert consulting and bespoke software development services for public and private sectors.">
+    <meta property="og:image" content="https://placehold.co/1920x1080/1a202c/e2e8f0?text=Zetta">
+    <meta property="og:url" content="https://www.zetta.dev">
+    <meta property="og:type" content="website">
     <!-- Use Tailwind CSS for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -20,7 +26,19 @@
     <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 bg-gray-900/80 backdrop-blur-md">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">Zetta</a>
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-white">
+                <!-- Zetta Logo SVG -->
+                <svg width="48" height="32" viewBox="0 0 48 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Z shape -->
+                    <path d="M4 4H44L4 28H44" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                    <!-- Circles on vertices -->
+                    <circle cx="4" cy="4" r="3" fill="currentColor"/>
+                    <circle cx="44" cy="4" r="3" fill="currentColor"/>
+                    <circle cx="4" cy="28" r="3" fill="currentColor"/>
+                    <circle cx="44" cy="28" r="3" fill="currentColor"/>
+                </svg>
+                <span>Zetta</span>
+            </a>
             <div class="hidden md:flex space-x-8">
                 <a href="#about" class="hover:text-white transition duration-300">About</a>
                 <a href="#services" class="hover:text-white transition duration-300">Services</a>
@@ -49,7 +67,7 @@
             <div class="absolute inset-0 bg-gray-900 opacity-70"></div>
             <div class="relative z-10 px-6 sm:px-12 lg:px-24">
                 <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4">
-                    Informatic Systems
+                    Informatics Systems
                 </h1>
                 <p class="text-lg sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
                     Transforming ideas into powerful, customized software solutions.
@@ -71,7 +89,7 @@
                 </div>
                 <div class="flex flex-col lg:flex-row items-center lg:space-x-12">
                     <div class="lg:w-1/2 mb-8 lg:mb-0">
-                        <img src="https://placehold.co/600x400/2d3748/a0aec0?text=Zetta+Office" alt="Zetta Team" class="rounded-lg shadow-xl">
+                        <img src="https://placehold.co/600x400/2d3748/a0aec0" alt="Zetta Team" class="rounded-lg shadow-xl">
                     </div>
                     <div class="lg:w-1/2">
                         <p class="text-base sm:text-lg text-gray-300 mb-4">
@@ -197,9 +215,9 @@
                     </form>
                     <div class="mt-8 text-center">
                         <p class="text-gray-400">Or reach us directly:</p>
-                        <p class="text-lg font-medium text-white">Email: contact@zettais.com</p>
-                        <p class="text-lg font-medium text-white">Phone: (PT) +351 9.... | (CV) +238 9...</p>
-                    </div> 
+                        <p class="text-lg font-medium text-white">Email: contact@zetta.dev</p>
+                        <p class="text-lg font-medium text-white">Phone: +238 91... (Cabo Verde) | +351 934... (Portugal)</p>
+                    </div>
                 </div>
             </div>
         </section>
