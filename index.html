@@ -7,7 +7,7 @@
     <!-- Web Open Graph Metadata -->
     <meta property="og:title" content="Zetta - Desenvolvimento de Software">
     <meta property="og:description" content="Transforming ideas into powerful, customized software solutions. We provide expert consulting and bespoke software development services for public and private sectors.">
-    <meta property="og:image" content="https://www.zettais.co/zettais_logo.svg">
+    <meta property="og:image" content="zettais_logo.svg">
     <meta property="og:url" content="https://www.zettais.com">
     <meta property="og:type" content="website">
     <!-- Use Tailwind CSS for a modern, responsive design -->
@@ -16,55 +16,65 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Default light mode background */
+            color: #1a202c; /* Default light mode text */
+        }
+        .dark body {
             background-color: #0d1117;
             color: #c9d1d9;
         }
-
-        svg {
-            color: #c9d1d9;; /* Sets the default color for elements using currentColor */
-        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-300">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-300">
 
     <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-gray-900/80 backdrop-blur-md">
+    <header class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md transition-colors duration-300">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-white">
-                <img src="zettais_logo.svg" alt="ZettaIS's logo"/>
+            <a href="#" class="flex items-center space-x-2 text-2xl font-bold text-gray-900 dark:text-white">
+                <!-- Zetta Logo SVG -->
+                <img src="zettais_logo.svg" alt="Zetta Logo" class="w-12 h-8">
                 <span>Zetta</span>
             </a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="hover:text-white transition duration-300">About</a>
-                <a href="#services" class="hover:text-white transition duration-300">Services</a>
-                <a href="#products" class="hover:text-white transition duration-300">Products</a>
-                <a href="#contact" class="hover:text-white transition duration-300">Contact</a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-blue-600 transition duration-300 dark:hover:text-white">About</a>
+                <a href="#services" class="hover:text-blue-600 transition duration-300 dark:hover:text-white">Services</a>
+                <a href="#products" class="hover:text-blue-600 transition duration-300 dark:hover:text-white">Products</a>
+                <a href="#contact" class="hover:text-blue-600 transition duration-300 dark:hover:text-white">Contact</a>
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle-btn" class="p-2 rounded-full text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none transition duration-300">
+                    <svg id="sun-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
             </div>
             <!-- Mobile Menu Button -->
-            <button id="menu-button" class="md:hidden text-white focus:outline-none">
+            <button id="menu-button" class="md:hidden text-gray-900 dark:text-white focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </nav>
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900/90 text-center py-4">
-            <a href="#about" class="block py-2 hover:text-white transition duration-300">About</a>
-            <a href="#services" class="block py-2 hover:text-white transition duration-300">Services</a>
-            <a href="#products" class="block py-2 hover:text-white transition duration-300">Products</a>
-            <a href="#contact" class="block py-2 hover:text-white transition duration-300">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/90 dark:bg-gray-900/90 text-center py-4">
+            <a href="#about" class="block py-2 hover:text-blue-600 transition duration-300 dark:hover:text-white">About</a>
+            <a href="#services" class="block py-2 hover:text-blue-600 transition duration-300 dark:hover:text-white">Services</a>
+            <a href="#products" class="block py-2 hover:text-blue-600 transition duration-300 dark:hover:text-white">Products</a>
+            <a href="#contact" class="block py-2 hover:text-blue-600 transition duration-300 dark:hover:text-white">Contact</a>
         </div>
     </header>
 
     <main>
         <!-- Hero Section -->
-        <section id="home" class="relative h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/1a202c/e2e8f0?text=Innovation+in+Software+Development');">
-            <div class="absolute inset-0 bg-gray-900 opacity-70"></div>
+        <section id="home" class="relative h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://placehold.co/1920x1080/f0f4f8/1a202c?text=Innovation+in+Software+Development');">
+            <div class="absolute inset-0 bg-white/70 dark:bg-gray-900/70 transition-colors duration-300"></div>
             <div class="relative z-10 px-6 sm:px-12 lg:px-24">
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-4">
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white leading-tight mb-4 transition-colors duration-300">
                     Informatics Systems
                 </h1>
-                <p class="text-lg sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                <p class="text-lg sm:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto transition-colors duration-300">
                     Transforming ideas into powerful, customized software solutions.
                 </p>
                 <a href="#contact" class="inline-block bg-blue-600 text-white font-semibold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">
@@ -74,11 +84,11 @@
         </section>
 
         <!-- About Section -->
-        <section id="about" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-800">
+        <section id="about" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-200 dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">About Zetta</h2>
-                    <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">About Zetta</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-colors duration-300">
                         We are a team of passionate innovators dedicated to building high-quality software.
                     </p>
                 </div>
@@ -87,10 +97,10 @@
                         <img src="https://placehold.co/600x400/2d3748/a0aec0" alt="Zetta Team" class="rounded-lg shadow-xl">
                     </div>
                     <div class="lg:w-1/2">
-                        <p class="text-base sm:text-lg text-gray-300 mb-4">
+                        <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 mb-4 transition-colors duration-300">
                             Zetta is an innovative technology company providing expert consulting and bespoke software development services to both public and private sectors. With a dedicated staff boasting over 20 years of collective experience in software development for leading companies across Europe, we bring a wealth of knowledge and a commitment to excellence to every project.
                         </p>
-                        <p class="text-base sm:text-lg text-gray-300">
+                        <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 transition-colors duration-300">
                             Our mission is to empower businesses with intelligent, custom-built solutions that streamline operations, enhance customer engagement, and drive growth. We believe in building strong, long-term partnerships with our clients, ensuring every solution we deliver is perfectly aligned with their unique goals.
                         </p>
                     </div>
@@ -99,48 +109,48 @@
         </section>
 
         <!-- Services Section -->
-        <section id="services" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-900">
+        <section id="services" class="py-20 px-6 sm:px-12 lg:px-24 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Our Services</h2>
-                    <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">Our Services</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-colors duration-300">
                         We offer a comprehensive range of services designed to meet your every need.
                     </p>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Service Card 1 -->
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
-                        <div class="text-blue-500 mb-4">
+                    <div class="bg-gray-200 dark:bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
+                        <div class="text-blue-600 dark:text-blue-500 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">Custom Software Development</h3>
-                        <p class="text-gray-400">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">Custom Software Development</h3>
+                        <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300">
                             Building bespoke applications from the ground up to fit your unique business needs and goals.
                         </p>
                     </div>
                     <!-- Service Card 2 -->
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
-                        <div class="text-blue-500 mb-4">
+                    <div class="bg-gray-200 dark:bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
+                        <div class="text-blue-600 dark:text-blue-500 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-1.252-8.472-3.506l1.096-1.096c1.868 1.87 4.295 2.87 6.876 2.87 2.58 0 5.008-1 6.876-2.87l1.096 1.096z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">IT Consulting</h3>
-                        <p class="text-gray-400">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">IT Consulting</h3>
+                        <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300">
                             Providing expert advice and strategic planning to optimize your technology infrastructure.
                         </p>
                     </div>
                     <!-- Service Card 3 -->
-                    <div class="bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
-                        <div class="text-blue-500 mb-4">
+                    <div class="bg-gray-200 dark:bg-gray-800 p-8 rounded-lg shadow-xl text-center hover:shadow-2xl transition duration-300 transform hover:scale-105">
+                        <div class="text-blue-600 dark:text-blue-500 mb-4">
                             <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2h-1a3 3 0 00-3 3v2m3-2v2m1-2a3 3 0 013-3V6m0 0a3 3 0 013-3v3m0 0h-3"></path>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">System Integration</h3>
-                        <p class="text-gray-400">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2 transition-colors duration-300">System Integration</h3>
+                        <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300">
                             Seamlessly connecting different software systems to work together efficiently.
                         </p>
                     </div>
@@ -149,25 +159,25 @@
         </section>
 
         <!-- Products Section -->
-        <section id="products" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-800">
+        <section id="products" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-200 dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Our Products</h2>
-                    <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">Our Products</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-colors duration-300">
                         Solutions crafted for specific industries to meet their unique challenges.
                     </p>
                 </div>
                 <!-- Zetta Biz Product Card -->
-                <div class="bg-gray-700 rounded-lg shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                <div class="bg-white dark:bg-gray-700 rounded-lg shadow-xl p-8 md:p-12 flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12 transition-colors duration-300">
                     <div class="md:w-1/2">
                         <img src="https://placehold.co/600x400/3182ce/ebf8ff?text=Zetta+Biz" alt="Zetta Biz Software" class="rounded-lg shadow-lg">
                     </div>
                     <div class="md:w-1/2">
-                        <h3 class="text-3xl font-bold text-white mb-4">Zetta Biz</h3>
-                        <p class="text-gray-300 text-lg mb-4">
+                        <h3 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">Zetta Biz</h3>
+                        <p class="text-gray-700 dark:text-gray-300 text-lg mb-4 transition-colors duration-300">
                             Zetta Biz is our flagship customized solution, designed specifically for the needs of retail, shops, and restaurants. It is a comprehensive business management tool that simplifies day-to-day operations.
                         </p>
-                        <ul class="list-disc list-inside space-y-2 text-gray-400 mb-6">
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-6 transition-colors duration-300">
                             <li>Point of Sale (POS) system</li>
                             <li>Inventory management</li>
                             <li>Customer relationship management (CRM)</li>
@@ -182,36 +192,36 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-900">
+        <section id="contact" class="py-20 px-6 sm:px-12 lg:px-24 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Contact Us</h2>
-                    <p class="text-lg text-gray-400 max-w-3xl mx-auto">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors duration-300">Contact Us</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-colors duration-300">
                         Let's build something great together. Fill out the form or use the contact details below.
                     </p>
                 </div>
-                <div class="max-w-4xl mx-auto bg-gray-800 p-8 rounded-lg shadow-xl">
+                <div class="max-w-4xl mx-auto bg-gray-200 dark:bg-gray-800 p-8 rounded-lg shadow-xl transition-colors duration-300">
                     <form action="#" method="POST" class="space-y-6">
                         <div>
-                            <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
-                            <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                            <label for="name" class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                         </div>
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                            <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
+                            <label for="email" class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200">
                         </div>
                         <div>
-                            <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"></textarea>
+                            <label for="message" class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1 transition-colors duration-300">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-lg bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"></textarea>
                         </div>
                         <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300">
                             Send Message
                         </button>
                     </form>
                     <div class="mt-8 text-center">
-                        <p class="text-gray-400">Or reach us directly:</p>
-                        <p class="text-lg font-medium text-white">Email: contact@zetta.dev</p>
-                        <p class="text-lg font-medium text-white">Phone: +238 91... (Cabo Verde) | +351 934... (Portugal)</p>
+                        <p class="text-gray-600 dark:text-gray-400 transition-colors duration-300">Or reach us directly:</p>
+                        <p class="text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300">Email: contact@zetta.dev</p>
+                        <p class="text-lg font-medium text-gray-900 dark:text-white transition-colors duration-300">Phone: +238 91... (Cabo Verde) | +351 934... (Portugal)</p>
                     </div>
                 </div>
             </div>
@@ -219,17 +229,46 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 py-8 text-center text-gray-500">
+    <footer class="bg-gray-200 dark:bg-gray-800 py-8 text-center text-gray-500 dark:text-gray-500 transition-colors duration-300">
         <p>&copy; 2025 Zetta - Desenvolvimento de Software. All Rights Reserved.</p>
     </footer>
 
-    <!-- JavaScript for Mobile Menu and Smooth Scroll -->
+    <!-- JavaScript for Mobile Menu, Smooth Scroll, and Theme Toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const menuButton = document.getElementById('menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const navLinks = document.querySelectorAll('nav a');
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            const htmlTag = document.documentElement;
 
+            // Check for saved theme in localStorage
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                htmlTag.classList.add('dark');
+                moonIcon.style.display = 'block';
+            } else {
+                htmlTag.classList.remove('dark');
+                sunIcon.style.display = 'block';
+            }
+
+            // Theme toggle functionality
+            themeToggleBtn.addEventListener('click', () => {
+                if (htmlTag.classList.contains('dark')) {
+                    htmlTag.classList.remove('dark');
+                    localStorage.theme = 'light';
+                    sunIcon.style.display = 'block';
+                    moonIcon.style.display = 'none';
+                } else {
+                    htmlTag.classList.add('dark');
+                    localStorage.theme = 'dark';
+                    sunIcon.style.display = 'none';
+                    moonIcon.style.display = 'block';
+                }
+            });
+
+            // Mobile menu functionality
             menuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
@@ -237,22 +276,18 @@
             // Smooth scrolling for navigation links
             navLinks.forEach(link => {
                 link.addEventListener('click', (event) => {
-                    // Prevent default anchor click behavior
                     event.preventDefault();
 
-                    // Get the target section ID from the href
                     const targetId = event.target.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
 
                     if (targetSection) {
-                        // Scroll to the target section smoothly
                         window.scrollTo({
                             top: targetSection.offsetTop - document.querySelector('header').offsetHeight,
                             behavior: 'smooth'
                         });
                     }
 
-                    // Hide the mobile menu after clicking a link
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                     }
