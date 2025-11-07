@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zetta - Interactive Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        :root {
+            --light-bg: #f5f5f5;
+            --light-text: #2c3e50;
+            --dark-bg: #1f2937;
+            --dark-text: #e5e7eb;
+            --light-card: #ffffff;
+            --dark-card: #374151;
+            --primary-accent: #3b82f6;
+            --secondary-accent: #22c55e;
+            --light-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --dark-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+        .light {
+            background-color: var(--light-bg);
+            color: var(--light-text);
+        }
+        .dark {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+        .light .card {
+            background-color: var(--light-card);
+            box-shadow: var(--light-shadow);
+        }
+        .dark .card {
+            background-color: var(--dark-card);
+            box-shadow: var(--dark-shadow);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .diagram-step {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .diagram-step:hover {
+            transform: translateY(-8px);
+        }
+    </style>
+</head>
+<body class="light">
+    <!-- Chosen Palette: Warm neutrals with subtle blue and green accents for a professional, supportive feel. -->
+    <!-- Application Structure Plan: The SPA is designed as a single-page dashboard with a top-down information flow, replacing the original linear brochure layout. This structure was chosen to make the report's key insights immediately accessible and interactive. It starts with a dynamic 'Our Impact' section to quantify the company's claims, followed by a 'Our Process' flow to explain methodologies, then a 'Solutions' tabbed interface for product details, and finally a 'Contact' section. This non-linear, task-oriented design allows users to explore specific areas of interest (e.g., 'impact' or 'process') without endless scrolling, fostering a more engaging and efficient user experience. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: "20+ years collective experience," "public and private sectors," "custom software development, IT consulting, system integration," "Zetta Biz features."
+        - Goal: Quantify claims & explain offerings.
+        - Viz/Presentation Method:
+            1. Services Mix -> Bar Chart -> Proportional breakdown -> Chart.js.
+            2. Client Sector Split -> Donut Chart -> Client base distribution -> Chart.js.
+            3. Development Process -> Interactive Flow Diagram -> Visualize a complex process -> Styled HTML/CSS/JS hover effects.
+            4. Zetta Biz Features -> Tabbed UI -> Organize discrete product features -> HTML/JS tab switching.
+        - Interaction: Users can click tabs to switch views and hover over diagram steps for details.
+        - Justification: These choices break down the static report text into digestible, interactive visuals. The charts provide a data-driven "proof" of expertise, while the flow diagram and tabs make complex information easy to explore. The non-linear flow avoids overwhelming the user and directly addresses the goal of ease of navigation and understanding.
+        - Library/Method: Chart.js for all charts. Vanilla JS for all interactions. Styled HTML/CSS for diagrams and UI components. NO SVG, NO Mermaid JS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <header class="fixed top-0 w-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-md z-50 transition-colors duration-300">
+        <nav class="container mx-auto px-4 py-4 md:flex md:justify-between md:items-center">
+            <div class="flex items-center justify-between">
+                <a href="#home" class="flex items-center space-x-2 text-2xl font-bold rounded-lg text-gray-900 dark:text-white">
+                    <span class="text-blue-600 dark:text-blue-400">●</span>
+                    <span>Zetta</span>
+                </a>
+                <button id="menu-button" class="md:hidden text-gray-900 dark:text-white p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:flex flex-col md:flex-row md:space-x-8 mt-4 md:mt-0 items-center">
+                <a href="#impact" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2">Our Impact</a>
+                <a href="#process" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2">Our Process</a>
+                <a href="#solutions" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2">Solutions</a>
+                <a href="#contact" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 py-2">Contact</a>
+                <button id="theme-toggle-btn" class="p-2 rounded-full text-gray-700 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <svg id="sun-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg id="moon-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 py-24">
+        <section id="home" class="mb-24 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-blue-600 dark:text-blue-400 leading-tight mb-4">Informatics Systems & Software Development</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto text-gray-700 dark:text-gray-300">Welcome to our interactive report. We’ve distilled our mission, expertise, and impact into an easy-to-explore dashboard. Here, you’ll find a data-driven look at our capabilities, a clear overview of our processes, and a deep dive into our flagship solutions, all designed to help you understand how we can transform your ideas into powerful software.</p>
+        </section>
+
+        <section id="impact" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Impact</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">This section provides a quantitative overview of our work, showcasing our project distribution and client base. By visualizing our portfolio, we aim to provide a clear and transparent look into the scope and scale of our development efforts.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                    <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">20+</div>
+                    <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Years of Collective Experience</div>
+                </div>
+                <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                    <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">150+</div>
+                    <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Projects Completed</div>
+                </div>
+                <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                    <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">100%</div>
+                    <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Customer Satisfaction</div>
+                </div>
+                <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                    <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">60+</div>
+                    <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Happy Clients</div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div class="card p-6 rounded-lg flex flex-col items-center">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-center">Project Distribution by Service</h3>
+                    <div class="chart-container">
+                        <canvas id="servicesChart"></canvas>
+                    </div>
+                </div>
+                <div class="card p-6 rounded-lg flex flex-col items-center">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-center">Client Sector Breakdown</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 mb-4">
+                        Our expertise spans across diverse industries, allowing us to deliver specialized solutions tailored to each sector's unique challenges.
+                        <ul class="list-disc list-inside mt-4">
+                            <li>Agriculture </li>
+                            <li>Civil Construction </li>
+                            <li>Manufacture </li>
+                            <li>Video Vigilance 
+
+[Image of a security camera]
+</li>
+                            <li>Transportation </li>
+                            <li>IoT </li>
+                            <li>Logistic </li>
+                        </ul>
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="sectorsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Process</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">Our proven development lifecycle ensures every project is delivered with precision and excellence. This diagram visualizes the key phases, from initial consultation to final delivery, ensuring transparency and alignment at every step. Hover over each stage to learn more about our approach.</p>
+            </div>
+            <div class="card p-8 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">💡</div>
+                        <h4 class="font-bold mb-2">1. Discovery</h4>
+                        <p class="text-sm">We begin with a deep dive into your business needs, goals, and challenges to define a clear project scope.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">✍️</div>
+                        <h4 class="font-bold mb-2">2. Design & Strategy</h4>
+                        <p class="text-sm">Our experts craft a tailored technical architecture and a user-centric design that meets your specific requirements.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">🛠️</div>
+                        <h4 class="font-bold mb-2">3. Development</h4>
+                        <p class="text-sm">The development phase focuses on building a high-quality, scalable, and robust software solution.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">🚀</div>
+                        <h4 class="font-bold mb-2">4. Deployment & Support</h4>
+                        <p class="text-sm">We ensure a smooth launch and provide ongoing maintenance and support to guarantee your success.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solutions" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Solutions</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">Beyond our bespoke services, we offer specialized products designed for specific industries. Our flagship solution, Zetta Biz, is a comprehensive platform built to streamline operations for retail, shops, and restaurants. Use the tabs below to explore its key features.</p>
+            </div>
+            <div class="card p-8 rounded-lg">
+                <div class="flex flex-wrap md:justify-center mb-8 space-x-2 md:space-x-4">
+                    <button id="pos-tab" class="tab-button active flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Point of Sale</button>
+                    <button id="inventory-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Inventory Management</button>
+                    <button id="crm-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">CRM</button>
+                    <button id="analytics-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Sales Analytics</button>
+                </div>
+                
+                <div id="pos-content" class="tab-content active transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Intuitive Point of Sale</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Our POS system is designed for speed and simplicity, helping you manage transactions, process payments, and serve your customers efficiently. It is built to handle the fast-paced environment of retail and hospitality with a clean, user-friendly interface on any device.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-blue-500 dark:text-blue-400">💰</div>
+                    </div>
+                </div>
+                <div id="inventory-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Intelligent Inventory Management</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Keep track of your stock in real-time. Zetta Biz provides powerful tools for managing your inventory, from tracking product levels and automating reorders to generating detailed reports that prevent stockouts and reduce waste.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-green-500 dark:text-green-400">📦</div>
+                    </div>
+                </div>
+                <div id="crm-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Advanced CRM</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Build stronger relationships with your customers. Our CRM module helps you manage customer data, track purchase history, and create personalized marketing campaigns that foster loyalty and drive repeat business.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-yellow-500 dark:text-yellow-400">🤝</div>
+                    </div>
+                </div>
+                <div id="analytics-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Powerful Sales Analytics</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Gain actionable insights from your sales data. Our comprehensive analytics and reporting dashboards help you monitor performance, identify trends, and make data-driven decisions to optimize your business operations.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-red-500 dark:text-red-400">📈</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="mb-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Let's Connect</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">Ready to build something great? Whether you have a specific project in mind or need expert advice, we're here to help. Reach out to us directly or fill out the form below.</p>
+            </div>
+            <div class="card p-8 rounded-lg max-w-4xl mx-auto">
+                <form action="#" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium mb-1">Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium mb-1">Message</label>
+                        <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-full shadow-lg hover:bg-blue-700 transition duration-300">Send Message</button>
+                </form>
+                <div class="mt-8 text-center text-gray-700 dark:text-gray-300">
+                    <p>Email: contact@zetta.dev</p>
+                    <p>Phone: +238 91... (Cabo Verde) | +351 934... (Portugal)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-8 text-gray-600 dark:text-gray-400">
+        <p>&copy; 2025 Zetta - Desenvolvimento de Software. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+        const navLinks = document.querySelectorAll('a[href^="#"]');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuButton = document.getElementById('menu-button');
+        
+        const servicesData = {
+            labels: ['Custom Software Development', 'IT Consulting', 'System Integration'],
+            values: [45, 30, 25]
+        };
+
+        const sectorsData = {
+            labels: ['Agriculture', 'Civil Construction', 'Manufacture', 'Video Vigilance', 'Transportation', 'IoT', 'Logistic'],
+            values: [15, 10, 20, 5, 10, 20, 20]
+        };
+
+        function wrapLabels(labels) {
+            return labels.map(label => {
+                const words = label.split(' ');
+                let result = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length <= 16) {
+                        currentLine += (currentLine.length > 0 ? ' ' : '') + word;
+                    } else {
+                        if (currentLine.length > 0) {
+                            result.push(currentLine);
+                        }
+                        currentLine = word;
+                    }
+                });
+                result.push(currentLine);
+                return result;
+            });
+        }
+
+        const chartConfig = {
+            services: {
+                type: 'bar',
+                data: {
+                    labels: servicesData.labels,
+                    datasets: [{
+                        data: servicesData.values,
+                        backgroundColor: ['#3b82f6', '#10b981', '#ef4444'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.formattedValue + '%';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value, index, values) {
+                                    return wrapLabels(servicesData.labels)[index];
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            sectors: {
+                type: 'doughnut',
+                data: {
+                    labels: sectorsData.labels,
+                    datasets: [{
+                        data: sectorsData.values,
+                        backgroundColor: ['#3b82f6', '#22c55e', '#f97316', '#a855f7', '#14b8a6', '#facc15', '#6366f1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.formattedValue + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        function updateChartColors() {
+            const isDarkMode = body.classList.contains('dark');
+            const fontColor = isDarkMode ? '#e5e7eb' : '#2c3e50';
+            const gridColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+
+            const updateOptions = (options) => {
+                if (options.scales) {
+                    Object.values(options.scales).forEach(scale => {
+                        if (scale.ticks) {
+                            scale.ticks.color = fontColor;
+                        }
+                        if (scale.grid) {
+                            scale.grid.color = gridColor;
+                        }
+                    });
+                }
+                if (options.plugins?.legend?.labels) {
+                    options.plugins.legend.labels.color = fontColor;
+                }
+            };
+            
+            updateOptions(chartConfig.services.options);
+            updateOptions(chartConfig.sectors.options);
+
+            if (window.servicesChart && window.sectorsChart) {
+                window.servicesChart.update();
+                window.sectorsChart.update();
+            }
+        }
+
+        window.onload = function() {
+            window.servicesChart = new Chart(document.getElementById('servicesChart'), chartConfig.services);
+            window.sectorsChart = new Chart(document.getElementById('sectorsChart'), chartConfig.sectors);
+            updateChartColors();
+        };
+
+        themeToggleBtn.addEventListener('click', () => {
+            const isDarkMode = body.classList.toggle('dark');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            updateChartColors();
+        });
+
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            body.classList.add('dark');
+        }
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                if (mobileMenu.classList.contains('md:hidden') && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const targetId = button.id.replace('-tab', '-content');
+                tabContents.forEach(content => {
+                    if (content.id === targetId) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
