@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zetta - Desenvolvimento de Software</title>
+    <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' cdn.tailwindcss.com cdn.jsdelivr.net 'unsafe-inline';
+    style-src 'self' cdn.tailwindcss.com cdn.jsdelivr.net fonts.googleapis.com 'unsafe-inline';
+    img-src 'self' placehold.co data:;
+    font-src 'self' fonts.gstatic.com;
+    ">
     <!-- Web Open Graph Metadata -->
     <meta property="og:title" content="Zetta - Desenvolvimento de Software">
     <meta property="og:description" content="Transforming ideas into powerful, customized software solutions. We provide expert consulting and bespoke software development services for public and private sectors.">
@@ -12,20 +19,11 @@
     <meta property="og:type" content="website">
     <!-- Use Tailwind CSS for a modern, responsive design -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Default light mode background */
-            color: #1a202c; /* Default light mode text */
-        }
-        .dark body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+    
+    <link rel="stylesheet" href="./src/index.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-300">
+<body class="light bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-300">
 
     <!-- Header & Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md transition-colors duration-300">
@@ -103,6 +101,65 @@
                         <p class="text-base sm:text-lg text-gray-700 dark:text-gray-300 transition-colors duration-300">
                             Our mission is to empower businesses with intelligent, custom-built solutions that streamline operations, enhance customer engagement, and drive growth. We believe in building strong, long-term partnerships with our clients, ensuring every solution we deliver is perfectly aligned with their unique goals.
                         </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    
+        <section id="process" class="py-20 px-6 sm:px-12 lg:px-24 bg-white dark:bg-gray-800 transition-colors duration-300">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Process</h2>
+                <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">Our proven development lifecycle ensures every project is delivered with precision and excellence. This diagram visualizes the key phases, from initial consultation to final delivery, ensuring transparency and alignment at every step. Hover over each stage to learn more about our approach.</p>
+            </div>
+            <div class="card p-8 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">💡</div>
+                        <h4 class="font-bold mb-2">1. Discovery</h4>
+                        <p class="text-sm">We begin with a deep dive into your business needs, goals, and challenges to define a clear project scope.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">✍️</div>
+                        <h4 class="font-bold mb-2">2. Design & Strategy</h4>
+                        <p class="text-sm">Our experts craft a tailored technical architecture and a user-centric design that meets your specific requirements.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">🛠️</div>
+                        <h4 class="font-bold mb-2">3. Development</h4>
+                        <p class="text-sm">The development phase focuses on building a high-quality, scalable, and robust software solution.</p>
+                    </div>
+                    <div class="diagram-step flex flex-col items-center text-center p-4 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-blue-100 dark:hover:bg-blue-900/50">
+                        <div class="text-4xl mb-2">🚀</div>
+                        <h4 class="font-bold mb-2">4. Deployment & Support</h4>
+                        <p class="text-sm">We ensure a smooth launch and provide ongoing maintenance and support to guarantee your success.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="py-20 px-6 sm:px-12 lg:px-24 bg-gray-200 dark:bg-gray-900 transition-colors duration-300">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Our Impact</h2>
+                    <p class="text-lg max-w-2xl mx-auto text-gray-700 dark:text-gray-300">This section provides a quantitative overview of our work, showcasing our project distribution and client base. By visualizing our portfolio, we aim to provide a clear and transparent look into the scope and scale of our development efforts.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 ">
+                    <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                        <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">20+</div>
+                        <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Years of Collective Experience</div>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                        <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">150+</div>
+                        <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Projects Completed</div>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                        <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">100%</div>
+                        <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Customer Satisfaction</div>
+                    </div>
+                    <div class="card p-6 rounded-lg text-center flex flex-col items-center justify-center">
+                        <div class="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">60+</div>
+                        <div class="text-lg font-medium text-gray-700 dark:text-gray-300">Happy Clients</div>
                     </div>
                 </div>
             </div>
@@ -188,6 +245,53 @@
                         </a>
                     </div>
                 </div>
+
+                <!-- -->
+                <div class="card p-8 rounded-lg bg-white dark:bg-gray-700">
+                <div class="flex flex-wrap md:justify-center mb-8 space-x-2 md:space-x-4">
+                    <button id="pos-tab" class="tab-button active flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Point of Sale</button>
+                    <button id="inventory-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Inventory Management</button>
+                    <button id="crm-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">CRM</button>
+                    <button id="analytics-tab" class="tab-button flex-1 md:flex-none py-2 px-4 rounded-full font-medium text-sm md:text-base mb-2 transition-colors duration-200">Sales Analytics</button>
+                </div>
+                
+                <div id="pos-content" class="tab-content active transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Intuitive Point of Sale</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Our POS system is designed for speed and simplicity, helping you manage transactions, process payments, and serve your customers efficiently. It is built to handle the fast-paced environment of retail and hospitality with a clean, user-friendly interface on any device.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-blue-500 dark:text-blue-400">💰</div>
+                    </div>
+                </div>
+                <div id="inventory-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Intelligent Inventory Management</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Keep track of your stock in real-time. Zetta Biz provides powerful tools for managing your inventory, from tracking product levels and automating reorders to generating detailed reports that prevent stockouts and reduce waste.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-green-500 dark:text-green-400">📦</div>
+                    </div>
+                </div>
+                <div id="crm-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Advanced CRM</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Build stronger relationships with your customers. Our CRM module helps you manage customer data, track purchase history, and create personalized marketing campaigns that foster loyalty and drive repeat business.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-yellow-500 dark:text-yellow-400">🤝</div>
+                    </div>
+                </div>
+                <div id="analytics-content" class="tab-content transition-all duration-300 ease-in-out">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold mb-4">Powerful Sales Analytics</h3>
+                            <p class="text-gray-700 dark:text-gray-300">Gain actionable insights from your sales data. Our comprehensive analytics and reporting dashboards help you monitor performance, identify trends, and make data-driven decisions to optimize your business operations.</p>
+                        </div>
+                        <div class="flex justify-center items-center text-8xl md:text-9xl text-red-500 dark:text-red-400">📈</div>
+                    </div>
+                </div>
+            </div>
             </div>
         </section>
 
@@ -234,66 +338,6 @@
     </footer>
 
     <!-- JavaScript for Mobile Menu, Smooth Scroll, and Theme Toggle -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const menuButton = document.getElementById('menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinks = document.querySelectorAll('nav a');
-            const themeToggleBtn = document.getElementById('theme-toggle-btn');
-            const sunIcon = document.getElementById('sun-icon');
-            const moonIcon = document.getElementById('moon-icon');
-            const htmlTag = document.documentElement;
-
-            // Check for saved theme in localStorage
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                htmlTag.classList.add('dark');
-                moonIcon.style.display = 'block';
-            } else {
-                htmlTag.classList.remove('dark');
-                sunIcon.style.display = 'block';
-            }
-
-            // Theme toggle functionality
-            themeToggleBtn.addEventListener('click', () => {
-                if (htmlTag.classList.contains('dark')) {
-                    htmlTag.classList.remove('dark');
-                    localStorage.theme = 'light';
-                    sunIcon.style.display = 'block';
-                    moonIcon.style.display = 'none';
-                } else {
-                    htmlTag.classList.add('dark');
-                    localStorage.theme = 'dark';
-                    sunIcon.style.display = 'none';
-                    moonIcon.style.display = 'block';
-                }
-            });
-
-            // Mobile menu functionality
-            menuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // Smooth scrolling for navigation links
-            navLinks.forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-
-                    const targetId = event.target.getAttribute('href').substring(1);
-                    const targetSection = document.getElementById(targetId);
-
-                    if (targetSection) {
-                        window.scrollTo({
-                            top: targetSection.offsetTop - document.querySelector('header').offsetHeight,
-                            behavior: 'smooth'
-                        });
-                    }
-
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="./src/main.js"></script>
 </body>
 </html>
